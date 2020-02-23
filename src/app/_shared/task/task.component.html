@@ -1,0 +1,7 @@
+<article id="{{details.id}}">
+    <button (click)="completeTask()">✓</button>
+    <h1 contenteditable (input)="onTitleChange($event.target.innerText)">{{details.title}}</h1>
+    <p *ngIf="details.notes" contenteditable (input)="onNotesChange($event.target.innerText)">{{details.notes}}</p>
+    <button (click)="deleteTask()">×</button>
+</article>
+<hr>

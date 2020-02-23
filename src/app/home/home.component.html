@@ -1,0 +1,27 @@
+<taskAdd *ngIf="this.forms.taskAddIsOpen"></taskAdd>
+
+<section *ngIf="!this.tasks.loaded">
+    loading ... {{loadingState}}
+    <progress *ngIf="tasksGetPercentage > 0" value="{{tasksGetPercentage}}" max="100">{{tasksGetPercentage}}</progress>
+</section>
+
+<section *ngIf="this.tasks.error">
+    error ... {{this.tasks.errorState}}
+</section>
+
+<main *ngIf="this.tasks.loaded && !this.tasks.error">
+
+    <div>
+        <button (change)="">+</button>
+        <select (change)="changeSelectedTasklist($event.target.value)">
+            <option *ngFor="let option of this.tasks.tasklists" value="{{option.id}}">{{option.title}}</option>
+        </select>
+        <button>✎</button>
+        <button>×</button>
+    </div>
+
+    <section *ngIf="this.tasks.loaded && !this.tasks.error">
+        <tasklist *ngFor="let tasklist of this.tasks.tasklists" [hidden]="this.tasks.selectedTaskList != tasklist.id"  [data]="tasklist" [tasks]="this.tasks.tasks[tasklist.id]"></tasklist>
+    </section>
+
+</main>

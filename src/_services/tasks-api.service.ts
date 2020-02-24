@@ -115,7 +115,7 @@ export class TasksApiService {
     this.loaded = true;
     this.error = true;
     this.errorState = txt;
-    console.warn(`Error details: ${error}`);
+    console.warn('Error details:', error);
     throw new Error(`Critical error: ${txt}`)
   }
 

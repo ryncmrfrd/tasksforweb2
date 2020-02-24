@@ -1,5 +1,4 @@
 <div id='{{data["id"]}}'>
-    OOF: {{listHasTasks}}
     <task *ngFor="let details of tasks" [details]='details'></task>
     <div class="container" *ngIf="!listHasTasks">
         <div class="notification is-warning">

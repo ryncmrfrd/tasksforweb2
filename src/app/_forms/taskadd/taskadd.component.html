@@ -1,7 +1,0 @@
-<button (click)="this.forms.taskaddForm('hide')">×</button>
-<h1>Add Task</h1>
-<form [formGroup]="taskaddForm">
-    <input type="text" id="title" formControlName="title">
-    <input type="text" id="notes" formControlName="notes">
-    <button type="submit" [disabled]="taskaddForm.invalid" (click)="onSubmit()">Submit</button>
-</form>

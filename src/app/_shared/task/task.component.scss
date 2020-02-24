@@ -1,0 +1,23 @@
+.container{
+    position: relative;
+    margin: 0 auto 15px auto;
+
+    .title{
+        font-weight: 400;
+    }
+
+    &.deleted{
+        pointer-events: none !important;
+        user-select: none !important;
+        opacity: .7
+    }
+
+    &.ghost{
+        opacity: .7
+    }
+
+    .media-left, .media-content, .media-content .content > h1:only-child{
+        margin-top: auto;
+        margin-bottom: auto
+    }
+}

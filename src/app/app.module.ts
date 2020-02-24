@@ -8,9 +8,6 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { TaskComponent } from './_shared/task/task.component';
 import { TasklistComponent } from './_shared/tasklist/tasklist.component';
-import { TasklistaddComponent } from './_forms/tasklistadd/tasklistadd.component';
-import { TasklistopenComponent } from './_forms/tasklistopen/tasklistopen.component';
-import { TaskaddComponent } from './_forms/taskadd/taskadd.component';
 
 @NgModule({
   declarations: [
@@ -18,9 +15,6 @@ import { TaskaddComponent } from './_forms/taskadd/taskadd.component';
     HomeComponent,
     TaskComponent,
     TasklistComponent,
-    TasklistaddComponent,
-    TasklistopenComponent,
-    TaskaddComponent,
     // LoginComponent
   ],
   imports: [

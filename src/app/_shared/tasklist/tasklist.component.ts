@@ -15,10 +15,11 @@ export class TasklistComponent implements AfterViewInit {
   @Input() data: {} = {};
   @Input() tasks: {} = {};
 
-  listHasTasks: boolean;
+  listHasTasks: boolean = false;
 
   ngAfterViewInit(): void {
-    this.listHasTasks = (Object.keys((this.tasks || {})).length > 0) ? true : false;
+    this.listHasTasks = (Object.keys((this.tasks || {})).length) == 0;
+    console.log(this.listHasTasks, Object.keys((this.tasks || {})).length)
   }
 
 }

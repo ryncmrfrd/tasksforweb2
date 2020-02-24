@@ -1,24 +1,65 @@
-<taskAdd *ngIf="this.forms.taskAddIsOpen"></taskAdd>
-
-<section *ngIf="!this.tasks.loaded">
-    loading ... {{loadingState}}
-    <progress *ngIf="tasksGetPercentage > 0" value="{{tasksGetPercentage}}" max="100">{{tasksGetPercentage}}</progress>
+<section id="LOADING"  class="hero is-info is-fullheight" *ngIf="!this.tasks.loaded">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title is-2">
+                <div class="button is-info is-loading is-medium"></div> Loading
+            </h1>
+            <h2 class="subtitle">
+                {{loadingState}}
+            </h2>
+        </div>
+    </div>
 </section>
 
-<section *ngIf="this.tasks.error">
-    error ... {{this.tasks.errorState}}
+<section id="ERROR"  class="hero is-danger is-fullheight" *ngIf="this.tasks.error">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title is-2">
+            Critical Error :(
+        </h1>
+        <h2 class="subtitle">
+            {{this.tasks.errorState}}
+        </h2>
+        <h2 class="subtitle">
+            Try again later, or <button class="reset" (click)="reload()">reload</button> the page.
+        </h2>
+      </div>
+    </div>
 </section>
 
 <main *ngIf="this.tasks.loaded && !this.tasks.error">
 
-    <div>
-        <button (change)="">+</button>
-        <select (change)="changeSelectedTasklist($event.target.value)">
-            <option *ngFor="let option of this.tasks.tasklists" value="{{option.id}}">{{option.title}}</option>
-        </select>
-        <button>✎</button>
-        <button>×</button>
-    </div>
+    <section class="level is-mobile" style="margin: 20px 20px 35px 20px;">
+        <div class="level-item level-left">
+            <div class="field has-addons">
+                <div class="control">
+                    <button class="control button is-info">
+                        <span class="icon">+</span>
+                    </button>
+                </div>
+                <div class="control">
+                    <div class="select">
+                        <select (change)="changeSelectedTasklist($event.target.value)">
+                            <option *ngFor="let option of this.tasks.tasklists" value="{{option.id}}">{{option.title}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control">
+                    <button class="control button is-danger">
+                        <span class="icon">×</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="level-item level-right">
+            <div class="field">
+                <p class="control button is-info">
+                    <span class="icon">+</span>
+                    <span>Add Task</span>
+                </p>
+            </div>
+        </div>
+    </section>
 
     <section *ngIf="this.tasks.loaded && !this.tasks.error">
         <tasklist *ngFor="let tasklist of this.tasks.tasklists" [hidden]="this.tasks.selectedTaskList != tasklist.id"  [data]="tasklist" [tasks]="this.tasks.tasks[tasklist.id]"></tasklist>

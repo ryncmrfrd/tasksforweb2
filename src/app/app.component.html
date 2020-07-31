@@ -1,10 +1,57 @@
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <span class="navbar-item">
-      <img src="../assets/Google Tasks Logo.png" alt="Google Tasks for Web" width="28" height="28">
-      <h1 class="subtitle is-4" style="margin-left: 12px">Google Tasks for Web</h1>
-    </span>
+<section id="TOOSMALL"  class="hero is-danger is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title is-2">
+          Your screen is too small :(
+      </h1>
+      <h2 class="subtitle" style="margin-top: 15px">
+          If you are using a mobile device, please download the official Google Tasks app below.
+          Otherwise, please resize your browser window.
+      </h2>
+      <h2 class="subtitle buttons" style="margin-top: 15px">
+        <button class="button" (click)="openPage('https://play.google.com/store/apps/details?id=com.google.android.apps.tasks&hl=en_AU')">
+          <span class="icon"><i class="fab fa-android"></i></span>
+          <span>Download</span>
+        </button>
+        <button class="button" (click)="openPage('https://apps.apple.com/us/app/google-tasks-get-things-done/id1353634006')">
+          <span class="icon"><i class="fab fa-apple"></i></span>
+          <span>Download</span>
+        </button>
+      </h2>
+    </div>
   </div>
+</section>
+
+<nav class="level is-mobile" style="margin: 10px">
+  
+  <div class="level-item level-left">
+    <img src="../assets/Google Tasks Logo.png" alt="Google Tasks for Web" width="28" height="28" />
+    <h1 class="subtitle is-4" style="margin-left: 12px">Google Tasks for Web</h1>
+  </div>
+  
+  <div *ngIf="this.router.url == '/'" class="level-item level-right">
+    <p class="control button" (click)="this.tasks.logout()">
+      <span class="icon"><i class="fas fa-plus"></i></span>
+      <span>Logout</span>
+    </p>
+  </div>
+
+  <div *ngIf="this.router.url == '/privacy'" class="level-item level-right">
+    <p class="control button" [routerLink]="'/'">
+      <span class="icon"><i class="fas fa-long-arrow-alt-left"></i></span>
+      <span>Home</span>
+    </p>
+  </div>
+
 </nav>
 
 <router-outlet></router-outlet>
+
+<div id="PRIVACY" style="position:fixed;bottom:0;width:100%;z-index:999">
+  <div class="container">
+    <div class="notification" style="border-radius: 4px 4px 0px 0px;">
+      Your privacy is important to us. View our privacy policy <button class="reset" [routerLink]="'/privacy'" (click)="removePrivacyLink()"> here</button>.
+      <button class="delete" (click)="removePrivacyLink()"><span class="icon"><i class="fas fa-times"></i></span></button>
+    </div>
+  </div>
+</div>

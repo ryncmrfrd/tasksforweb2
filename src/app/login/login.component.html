@@ -1,1 +1,35 @@
-<p>login works!</p>
+<section class="hero is-medium">
+  <div class="hero-body">
+      <div class="container">
+          <h1 class="title is-2">
+              Google Tasks For Web <sup class="has-text-info">2</sup>
+          </h1>
+          <h2 class="subtitle" style="margin-top: 15px">
+            After Google killed their tasks web app <span class="icon has-text-danger"><i class="fas fa-heart-broken"></i></span>, I had no way of neatly accessing my critical to-dos from my laptop.<br>
+            So I built Tasks for Web. And it sucked. So welcome to Tasks for Web <sup>2</sup>. It's better I swear.
+          </h2>
+          <h2 class="subtitle" style="margin-top: 15px">
+            <div class="field has-addons">
+              <p class="control">
+                <button class="button">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Github Repo</span>
+                </button>
+              </p>
+              <p class="control">
+                <button class="button is-info" [ngClass]="['control', 'botton', this.isLoaded ? '' : 'is-loading']" (click)="this.tasks.login()">
+                  <span>Login With</span>
+                  <span class="icon"><i class="fab fa-google"></i></span>
+                </button>
+              </p>
+              <p class="control">
+                <button class="button">
+                  <span class="icon"><i class="fas fa-code"></i></span>
+                  <span>Other Projects</span>
+                </button>
+              </p>
+            </div>
+          </h2>
+      </div>
+  </div>
+</section>

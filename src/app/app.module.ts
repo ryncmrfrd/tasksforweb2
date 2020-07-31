@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { TaskComponent } from './_shared/task/task.component';
 import { TasklistComponent } from './_shared/tasklist/tasklist.component';
+import { PrivacyComponent } from './privacy/privacy.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { TasklistComponent } from './_shared/tasklist/tasklist.component';
     HomeComponent,
     TaskComponent,
     TasklistComponent,
-    // LoginComponent
+    LoginComponent,
+    PrivacyComponent
   ],
   imports: [
     BrowserModule,

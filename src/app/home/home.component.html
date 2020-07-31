@@ -33,8 +33,8 @@
         <div class="level-item level-left">
             <div class="field has-addons">
                 <div class="control">
-                    <button class="control button is-info">
-                        <span class="icon">+</span>
+                    <button class="control button is-info" (click)="addTaskList()">
+                        <span class="icon"><i class="fas fa-plus"></i></span>
                     </button>
                 </div>
                 <div class="control">
@@ -44,17 +44,17 @@
                         </select>
                     </div>
                 </div>
-                <div class="control">
+                <div class="control" (click)="removeTaskList(this.tasks.selectedTaskList)">
                     <button class="control button is-danger">
-                        <span class="icon">×</span>
+                        <span class="icon"><i class="fas fa-times"></i></span>
                     </button>
                 </div>
             </div>
         </div>
         <div class="level-item level-right">
             <div class="field">
-                <p class="control button is-info">
-                    <span class="icon">+</span>
+                <p class="control button is-info" (click)="addTask()">
+                    <span class="icon"><i class="fas fa-plus"></i></span>
                     <span>Add Task</span>
                 </p>
             </div>

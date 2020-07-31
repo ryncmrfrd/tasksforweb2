@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { TasksApiService } from '../_services/tasks-api.service'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +11,14 @@ import { TasksApiService } from '../_services/tasks-api.service'
 
 export class AppComponent {
 
-  constructor(private tasks: TasksApiService){}
+  constructor(public tasks: TasksApiService, public router: Router){}
 
-  ngOnInit(): void {
-    this.tasks.init();
+  openPage(link: string){
+    window.open(link)
+  }
+
+  removePrivacyLink(){
+    document.querySelector("#PRIVACY").remove()
   }
 
 }

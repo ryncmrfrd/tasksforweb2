@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TasksApiService } from 'src/_services/tasks-api.service';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(public tasks:TasksApiService) { }
 
-  ngOnInit(): void {
+  isLoaded = false;
+
+  async ngOnInit() {
+    await this.tasks.init();
+    this.isLoaded = true;
   }
 
 }

@@ -1,12 +1,22 @@
 @import 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.0/css/bulma.min.css';
 
-#LOADING, #ERROR{
-    z-index: 999;
-    height: 100vh;
-    width: 100vw;
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
+#LOADING, #ERROR, #TOOSMALL{
+    z-index: 997;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0; left: 0;
+}
+
+#TOOSMALL{
+    z-index: 998;
+    display: none;
+}
+
+@media only screen and (max-width: 392px) {
+    #TOOSMALL{
+        display: initial;
+    }
 }
 
 button.reset {

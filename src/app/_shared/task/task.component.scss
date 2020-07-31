@@ -6,12 +6,6 @@
         font-weight: 400;
     }
 
-    &.deleted{
-        pointer-events: none !important;
-        user-select: none !important;
-        opacity: .7
-    }
-
     &.ghost{
         opacity: .7
     }
@@ -19,5 +13,21 @@
     .media-left, .media-content, .media-content .content > h1:only-child{
         margin-top: auto;
         margin-bottom: auto
+    }
+
+    .media-content{
+        &::-webkit-scrollbar{ 
+            display: none;
+            width: 0px;
+            background: transparent
+        }
+    }
+}
+
+.message{
+    &.deleted, &.completed{
+        pointer-events: none !important;
+        user-select: none !important;
+        opacity: .7
     }
 }

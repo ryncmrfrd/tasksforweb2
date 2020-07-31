@@ -17,8 +17,10 @@ export class HomeComponent implements OnInit {
   loadingState = "";
 
   async ngOnInit() {
+    if(this.tasks.isInited || this.tasks.loaded) return;
     this.loadingState = "Initializing API";
-    await this.tasks.init();
+    var isLoggedIn = await this.tasks.init();
+    if(!isLoggedIn) return;
     this.loadingState = "Fetching tasklists";
     await this.tasks.tasklistGet();
     for(let i = 0; i < this.tasks.tasklists.length; i++){
@@ -27,13 +29,27 @@ export class HomeComponent implements OnInit {
     }
     this.tasks.selectedTaskList = this.tasks.tasklists[0].id;
     this.tasks.loaded = true;
-    this.title.setTitle("Tasks For Web");
+    console.log(this.tasks.tasklists)
+    console.log(this.tasks.tasks)
   }
 
   changeSelectedTasklist(val: String) { this.tasks.selectedTaskList = val }
+  reload(){ window.location.reload() }
 
-  reload(){
-    window.location.reload()
+  addTask(){
+    var taskName = prompt("Please enter a name");
+    this.tasks.tasksAdd(this.tasks.selectedTaskList, {"title": taskName})
   }
+
+  addTaskList(){
+    var taskListName = prompt("Please enter a name");
+    this.tasks.tasklistAdd(taskListName)
+  }
+
+  async removeTaskList(val: string){
+    this.changeSelectedTasklist(this.tasks.tasklists[0].id)
+    this.tasks.tasklistDelete(val);
+  }
+
 
 }

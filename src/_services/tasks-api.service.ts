@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 
 export class TasksApiService {
 
-  constructor() { }
+  constructor( private router: Router ) { }
 
   public loaded = false;
 
@@ -17,25 +18,33 @@ export class TasksApiService {
   private gauthcode: string = '248150601049-fbibbrvjeqojdj45csgilhmj2vk7240e.apps.googleusercontent.com';
 
   private findWithAttr(array, attr, value) {
-    for(var i = 0; i < array.length; i += 1) {
-        if(array[i][attr] === value) {
-            return i;
-        }
+    for(let i = 0; i < array.length; i++) {
+        if(array[i][attr] === value) { return i }
     }
     return -1;
   }
 
+  public isInited = false;
+
   async init(){
-    await this.api.authorize(this.gauthcode).catch(e => this._error('Error authorizing API.', e) );
+    if(this.isInited) return true;
+    await this.api.authorize(this.gauthcode).catch(e => this._error('Error authorising client', e) );
+    this.isInited = true;
+    var isLoggedIn = this.isloggedin();
+    if(!isLoggedIn){
+      this.router.navigate(['/login']);
+      return false;
+    }
     await this.api.loadClient().catch(e => this._error('Error loading client', e) );
     return true
   }
 
-  login(){ return this.api.signIn() }
-  logout(){ return this.api.logout() }
-  isloggedin(){ return this.api.isSignedIn() }
+  login(){  return this.api.signIn().catch(e => this._error('Error signing in', e)); }
+  logout(){  return this.api.logout().catch(e => this._error('Error logging out', e)); }
+  isloggedin(){  return this.api.isSignedIn() }
 
   async tasksGet(tasklistID){ 
+    
     var tasks = await this.api.listTasks(tasklistID).catch(e => this._error('Error getting tasks.', e) );
     if(!tasks) return []; //If tasklist is empty DO NOT return 'undefined', return '[]'
     else {
@@ -46,6 +55,7 @@ export class TasksApiService {
   }
 
   async tasksAdd(tasklistID, details){
+    
     var newtask = await this.api.insertTask(tasklistID, details).catch(e => { this._error('Error adding task.', e) });
     this.tasks[tasklistID].push(newtask); //Add new task to array
     this.tasks[tasklistID].sort((a, b) => { return a['position'] - b['position'] }); //Sort by 'position' value
@@ -53,6 +63,7 @@ export class TasksApiService {
   }
 
   async tasksEdit(tasklistID, taskID, details){
+    
     //return if title/notes have not changed
     var taskObj = this.tasks[tasklistID][this.findWithAttr(this.tasks[tasklistID], 'id', taskID)];
     if((details.title && details.title == taskObj.title) || (details.notes && details.notes == taskObj.notes)) return;
@@ -62,12 +73,16 @@ export class TasksApiService {
   }
 
   async tasksMove(tasklistID, taskID, previous){
+    
     var movedtask = await this.api.moveTask(tasklistID, taskID, previous).catch(e => this._error('Error moving task.', e) );
     this.tasks[tasklistID].sort((a, b) => { return a["position"] - b["position"] }); //Sort by 'position' value
     return movedtask
   }
 
   async tasksComplete(tasklistID, taskID){
+    
+    document.querySelector(`#${taskID}`).classList.add("completed"); 
+
     var completedtask = await this.api.updateTask( tasklistID, taskID, { "status": "completed" } ).catch(e => this._error('Error completing task.', e) );
 
     //Remove the deleted item from tasks arr
@@ -79,6 +94,9 @@ export class TasksApiService {
   }
 
   async tasksDelete(tasklistID, taskID){
+    
+    document.querySelector(`#${taskID}`).classList.add("deleted"); 
+
     var deletedtask = await this.api.deleteTask(tasklistID, taskID).catch(e => this._error('Error deleting task.', e) );
 
     //Remove the deleted item from tasks arr
@@ -90,6 +108,7 @@ export class TasksApiService {
   }
 
   async tasklistGet(){
+    
     var tasklists = await this.api.listTaskLists().catch(e => this._error('Error fetching tasklists.', e) );
     this.tasklists = tasklists;
     return tasklists
@@ -102,11 +121,20 @@ export class TasksApiService {
   }
 
   async tasklistEdit(tasklistID, title){
-
+    
   }
 
   async tasklistDelete(tasklistID){
 
+    var deletedtasklist = await this.api.deleteTaskList(tasklistID).catch(e => this._error('Error deleting tasklist.', e) );
+    
+    // remove tasklist from array
+    var indexToDelete = this.findWithAttr(this.tasklists, 'id', tasklistID);
+    this.tasklists.splice(indexToDelete, 1);
+    // remove tasks from array
+    delete this.tasks[tasklistID]
+    
+    return deletedtasklist
   }
 
   public error = false;
